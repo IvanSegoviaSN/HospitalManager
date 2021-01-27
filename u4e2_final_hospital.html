@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+
+    <!-- Required Framework -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/css/bootstrap.min.css">
+
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+
+<body class="fix-menu" onload="launchData();">
+
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="login-card card-block auth-body mr-auto ml-auto">
+                    <form id="formMain" class="md-float-material">
+                        <div class="auth-box">
+
+                            <div class="row m-b-20">
+                                <div class="col-md-12">
+                                    <h3 class="text-left txt-primary">u4e2_final_hospital.html</h3>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div class="row m-t-25 text-left">
+                                <div class="col-sm-6 col-xs-12">
+                                    <select id="selectMain" class="form-control" required></select>
+                                </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <button type="button" id="btnConsultMain" onclick="actionConsultMain(event);" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Consultar</button>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div class="row m-t-30">
+                                <div class="col-md-4">
+                                    <button type="button" id="btnInsertSec" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Insertar</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" id="btnModifySec" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Modificar</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" id="btnRemoveSec" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Eliminar</button>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div id="divHospitalInsertMain">
+                                <h1>Insertar Hospital</h1>
+
+                                <div class="input-group">
+                                    <input type="text" id="inputNameHospital" class="form-control" placeholder="Nombre del hospital" required>
+                                    <span class="md-line"></span>
+                                </div>
+
+                                <br>
+
+                                <div class="row m-t-25 text-left">
+                                    <div class="col-sm-6 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" id="inputLocHospital" class="form-control" placeholder="Localidad" required>
+                                            <span class="md-line"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" id="inputResHospital" class="form-control" placeholder="Responsable" required>
+                                            <span class="md-line"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+
+
+                            <div id="divLaborInsertMain">
+                                <h1>Insertar Personal</h1>
+
+                                <div class="row m-t-25 text-left">
+                                    <div class="col-sm-6 col-xs-12">
+                                        <div class="input-group">
+                                            <input type="text" id="inputNameLabor" class="form-control" placeholder="Nombre" required>
+                                            <span class="md-line"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12">
+                                        <div class="input-group">
+                                            <select id="selectSpecialtyLabor" class="form-control" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+
+                            <div id="divPatientInsertMain">
+                                <h1>Insertar Paciente</h1>
+
+                                <div class="input-group">
+                                    <input type="text" id="inputNamePatient" class="form-control" placeholder="Nombre del paciente" required>
+                                    <span class="md-line"></span>
+                                </div>
+
+                                <br>
+
+                                <div class="row m-t-25 text-left">
+                                    <div class="col-sm-6 col-xs-12">
+                                        <select id="selectHospitalPatient" class="form-control" required>
+                                            <option value="">Sin Hospital</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 col-xs-12">
+                                        <div class="input-group">
+                                            <select id="selectLaborPatient" class="form-control" required>
+                                                <option value="">Sin Personal</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+
+                            <div class="row">
+                                <div id="outputHospital" class="col-md-12 text-dark text-left"></div>
+                                <div id="outputLabor" class="col-md-12 text-dark text-left"></div>
+                                <div id="outputPatient" class="col-md-12 text-dark text-left"></div>
+                            </div>
+
+                            <div class="row m-t-25 text-left">
+                                <div class="col-sm-6 col-xs-12">
+                                    <button type="button" id="btnSaveMain" onclick="saveData();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Guardar</button>
+                                </div>
+                                <div class="col-sm-6 col-xs-12">
+                                    <button type="button" id="btnClearMain" onclick="removeDataForm();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Limpiar</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="assets/js/hospital.js"></script>
+<script src="assets/js/labor.js"></script>
+<script src="assets/js/patient.js"></script>
+
+<script src="assets/js/front.js"></script>
+<script src="assets/js/back.js"></script>
+
+</body>
+
+</html>
