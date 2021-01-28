@@ -12,6 +12,9 @@
     <!-- Required Framework -->
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/css/bootstrap.min.css">
 
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/4e6764bcd8.js" crossorigin="anonymous"></script>
+
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
@@ -40,21 +43,18 @@
                                     <select id="selectMain" class="form-control" required></select>
                                 </div>
                                 <div class="col-sm-6 col-xs-12">
-                                    <button type="button" id="btnConsultMain" onclick="actionConsultMain(event);" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Consultar</button>
+                                    <button type="button" id="btnConsultMain" onclick="pushConsultData(event);" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Consultar</button>
                                 </div>
                             </div>
 
                             <hr/>
 
                             <div class="row m-t-30">
-                                <div class="col-md-4">
-                                    <button type="button" id="btnInsertSec" onclick="actionInsertMain();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Insertar</button>
+                                <div class="col-md-6">
+                                    <button type="button" id="btnInsertSec" onclick="pushInsertData();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Insertar</button>
                                 </div>
-                                <div class="col-md-4">
-                                    <button type="button" id="btnModifySec" onclick="actionModifyMain();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Modificar</button>
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="button" id="btnRemoveSec" onclick="removeItem();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Eliminar</button>
+                                <div class="col-md-6">
+                                    <button type="button" id="btnModifySec" onclick="pushModifyData();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Modificar</button>
                                 </div>
                             </div>
 
@@ -148,7 +148,7 @@
 
                             <div class="row m-t-25 text-left">
                                 <div class="col-sm-6 col-xs-12">
-                                    <button type="button" id="btnSaveMain" onclick="saveData();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Guardar</button>
+                                    <button type="button" id="btnSaveMain" onclick="insertItems();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Guardar</button>
                                 </div>
                                 <div class="col-sm-6 col-xs-12">
                                     <button type="button" id="btnClearMain" onclick="removeDataForm();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Limpiar</button>

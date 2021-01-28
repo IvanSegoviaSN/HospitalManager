@@ -28,4 +28,5 @@ class Hospital {
     set attendant(value) {
         this._attendant = value;
     }
+
 }

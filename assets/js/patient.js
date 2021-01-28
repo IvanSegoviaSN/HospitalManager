@@ -28,4 +28,5 @@ class Patient {
     set labor(value) {
         this._labor = value;
     }
+
 }

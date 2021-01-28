@@ -19,4 +19,5 @@ class Labor {
     set specialty(value) {
         this._specialty = value;
     }
+
 }

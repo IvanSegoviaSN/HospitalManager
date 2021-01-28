@@ -1,34 +1,15 @@
-const hospitalList = [new Hospital("Puerta de Hierro", "Majadahonda", "Luis Aragonés")];
-const laborList = [new Labor("Irene Sanchez", "Médico")];
-const patientList = [new Patient("Jesus García", "Puerta de Hierro", "Irene Sanchez")];
+const hospitalList = [new Hospital("Puerta de Hierro", "Majadahonda", "Luis"),
+                                     new Hospital("Santa Teresa", "Ávila", "Pedro")];
+
+const laborList        = [new Labor("Irene Sanchez", "Médico"),
+                                      new Labor("Sonia Carmona", "Celador")];
+
+const patientList    = [new Patient("Jesus García", "Puerta de Hierro", "Irene Sanchez"),
+                                      new Patient("Angel Nieto", "Santa Teresa", "Sonia Carmona")];
 
 let valueSelectMain;
 
-// Lanza la carga de datos en el formulario
-function launchData() {
-    // Oculta los contenedores en la carga
-    showDivs(-1, 'none');
-
-    // Desactivo los botones por defecto
-    disableButtons(true);
-
-    // Llenado de valores para el select "selectMain"
-    let optionsMain = '<option value="-1">Elige una opción</option>' +
-        '<option value="0">' + "Hospital" + '</option>' +
-        '<option value="1">' + "Personal" + '</option>' +
-        '<option value="2">' + "Paciente" + '</option>';
-    document.getElementById("selectMain").innerHTML = optionsMain;
-
-    // Llenado de valores para el select "selectSpecialtyLabor"
-    let optionsSpecialty = '<option value="-1">Sin especialidad</option>' +
-        '<option value="Médico">' + "Médico" + '</option>' +
-        '<option value="Enfermera">' + "Enfermera" + '</option>' +
-        '<option value="Celador">' + "Celador" + '</option>';
-    document.getElementById("selectSpecialtyLabor").innerHTML = optionsSpecialty;
-
-}
-
-function saveData() {
+function insertItems() {
     switch (parseInt(document.getElementById("selectMain").value)) {
         case 0:
             let listHospital = [document.getElementById("inputNameHospital").value,
@@ -99,21 +80,101 @@ function modifyLaborItems() {
 
 function modifyPatientItems() {
     let itemPatient = document.getElementById("modifyPatientItem").value;
-    let itemSwapPatient;
 
-    for (let i = 0; i < patientList.length; i++) {
-        if (patientList[0] === itemPatient) {
-            itemSwapPatient = patientList[0];
-        }
+    function checkItem(item) {
+        return item.name === itemPatient;
     }
+    itemPatient = patientList.find(checkItem);
 
-    document.getElementById("inputNamePatient").value = itemSwapPatient.name;
-    document.getElementById("selectHospitalPatient").value = itemSwapPatient.hospital;
-    document.getElementById("selectLaborPatient").value = itemSwapPatient.labor;
+    document.getElementById("inputNamePatient").value = itemPatient.name;
+    document.getElementById("selectHospitalPatient").value = itemPatient.hospital;
+    document.getElementById("selectLaborPatient").value = itemPatient.labor;
 
+    patientList.splice(patientList.indexOf(itemPatient), 1);
 }
 
+function showHospitalData() {
+    // Crea una tabla
+    let code = '<h1>Lista Hospitales</h1><table class="table"><thead>' +
+        '<th scope="col">Nombre</th>' +
+        '<th scope="col">Localidad</th>' +
+        '<th scope="col">Responsable</th>' +
+        '<th scope="col"></th></thead><tbody>';
 
-function removeItem() {
-    
+    for (let i = 0; i < hospitalList.length; i++) {
+        code += '<tr><th scope="row">' +
+            hospitalList[i].name + '</th><td>' +
+            hospitalList[i].location + '</td><td>' +
+            hospitalList[i].attendant + '</td><td>' +
+            '<button type="button" onclick="removeHospitalItem(' + i + ')" class="btn btn-danger" style="padding: revert;">' +
+            '<i class="fas fa-trash-alt"></i></button>' + '</td></tr>';
+    }
+
+    code += '</tbody></table>';
+
+    // Inserta el codigo en el DOM
+    for (let i = 0; i < hospitalList.length; i++) {
+        document.getElementById("outputHospital").innerHTML = code;
+    }
+}
+
+function showLaborData() {
+    // Crea una tabla
+    let code = '<h1>Lista Personal</h1><table class="table"><thead>' +
+        '<th scope="col">Nombre</th>' +
+        '<th scope="col">Especialidad</th></thead><tbody>';
+
+    for (let i = 0; i < laborList.length; i++) {
+        code += '<tr><th scope="row">' +
+            laborList[i].name + '</th><td>' +
+            laborList[i].specialty + '</td><td>' +
+            '<button type="button" onclick="removeLaborItem(' + i + ')" class="btn btn-danger" style="padding: revert;">' +
+            '<i class="fas fa-trash-alt"></i></button>' + '</td></tr>';
+    }
+
+    code += '</tbody></table>';
+
+    // Inserta el codigo en el DOM
+    for (let i = 0; i < laborList.length; i++) {
+        document.getElementById("outputLabor").innerHTML = code;
+    }
+}
+
+function showPatientData() {
+    // Crea una tabla
+    let code = '<h1>Lista Pacientes</h1><table class="table"><thead>' +
+        '<th scope="col">Nombre</th>' +
+        '<th scope="col">Hospital</th>' +
+        '<th scope="col">Personal</th></thead><tbody>';
+
+    for (let i = 0; i < patientList.length; i++) {
+        code += '<tr><th scope="row">' +
+            patientList[i].name + '</th><td>' +
+            patientList[i].hospital + '</td><td>' +
+            patientList[i].labor + '</td><td>' +
+            '<button type="button" onclick="removePatientItem(' + i + ')" class="btn btn-danger" style="padding: revert;">' +
+            '<i class="fas fa-trash-alt"></i></button>' + '</td></tr>';
+    }
+
+    code += '</tbody></table>';
+
+    // Inserta el codigo en el DOM
+    for (let i = 0; i < patientList.length; i++) {
+        document.getElementById("outputPatient").innerHTML = code;
+    }
+}
+
+function removeHospitalItem(indexToRemove) {
+    hospitalList.splice(indexToRemove, 1);
+    showHospitalData();
+}
+
+function removeLaborItem(indexToRemove) {
+    laborList.splice(indexToRemove, 1);
+    showLaborData();
+}
+
+function removePatientItem(indexToRemove) {
+    patientList.splice(indexToRemove, 1);
+    showPatientData();
 }

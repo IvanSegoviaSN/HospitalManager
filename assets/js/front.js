@@ -1,3 +1,33 @@
+// Lanza la carga de datos en el formulario
+function launchData() {
+    // Oculta los contenedores en la carga
+    showDivs(-1, 'none');
+
+    // Desactivo los botones por defecto
+    disableButtons(true);
+
+    // Llenado de valores para el select "selectMain"
+    document.getElementById("selectMain").innerHTML = '<option value="-1">Elige una opción</option>' +
+        '<option value="0">' + "Hospital" + '</option>' +
+        '<option value="1">' + "Personal" + '</option>' +
+        '<option value="2">' + "Paciente" + '</option>';
+
+    // Llenado de valores para el select "selectSpecialtyLabor"
+    document.getElementById("selectSpecialtyLabor").innerHTML = '<option value="-1">Sin especialidad</option>' +
+        '<option value="Médico">' + "Médico" + '</option>' +
+        '<option value="Enfermera">' + "Enfermera" + '</option>' +
+        '<option value="Celador">' + "Celador" + '</option>';
+
+}
+
+// Oculta todos los contenedores, reiniciando el diseño
+function resetDesing() {
+    disableButtons(true);
+    showDivs(-1, 'none');
+    removeDataForm(false);
+}
+
+// Muestra u oculta los contenedores correspondientes
 function showDivs(id, display) {
     switch (id) {
         case 0:
@@ -28,27 +58,54 @@ function showDivs(id, display) {
 
 }
 
-function resetDesing() {
-    disableButtons(true);
-    showDivs(-1, 'none');
-    removeDataForm(false);
-}
-
 // Desactiva los botones
 function disableButtons(disable) {
     document.getElementById("btnInsertSec").disabled = disable;
     document.getElementById("btnModifySec").disabled = disable;
-    document.getElementById("btnRemoveSec").disabled = disable;
 }
 
-function removeDataForm(design) {
-    document.getElementById("formMain").reset();
+function pushConsultData(event) {
+    event.preventDefault();
 
-    if (design)
+    valueSelectMain = parseInt(document.getElementById("selectMain").value);
+
+    if (valueSelectMain !== -1) {
+        showDivs(valueSelectMain, 'block');
+        disableButtons(false);
+
+        // Genera una tabla y vuelca los datos
+        switch (valueSelectMain) {
+            case 0:
+                showHospitalData();
+                break;
+            case 1:
+                showLaborData();
+                break;
+            case 2:
+                // Llenado de valores para el select "selectHospitalPatient"
+                let optionsHospital = '<option value="-1">Sin hospital</option>';
+                hospitalList.forEach(function (hospitalItem) {
+                    optionsHospital += '<option value="' + hospitalItem.name + '">' + hospitalItem.name + '</option>';
+                })
+                document.getElementById("selectHospitalPatient").innerHTML = optionsHospital;
+
+                // Llenado de valores para el select "selectLaborPatient"
+                let optionsLabor = '<option value="-1">Sin Personal</option>';
+                laborList.forEach(function (laborItem) {
+                    optionsLabor += '<option value="' + laborItem.name + '">' + laborItem.name + '</option>';
+                })
+                document.getElementById("selectLaborPatient").innerHTML = optionsLabor;
+
+                showPatientData();
+                break;
+        }
+
+    } else {
         resetDesing();
+    }
 }
 
-function actionModifyMain() {
+function pushModifyData() {
     switch (valueSelectMain) {
         case 0:
             document.getElementById("hospitalTitle").innerHTML = "Modificar Hospital";
@@ -117,48 +174,7 @@ function actionModifyMain() {
     }
 }
 
-function actionConsultMain(event) {
-    event.preventDefault();
-
-    valueSelectMain = parseInt(document.getElementById("selectMain").value);
-
-    // Desactiva los botones
-    valueSelectMain == -1 ? resetDesing() :
-        disableButtons(false);
-
-    // Activa el contenedor elegido
-    if (valueSelectMain != -1) {
-        showDivs(valueSelectMain, 'block');
-
-        if (valueSelectMain === 2) {
-            // Llenado de valores para el select "selectHospitalPatient"
-            let optionsHospital = '<option value="-1">Sin hospital</option>';
-            hospitalList.forEach(function (hospitalItem) {
-                optionsHospital += '<option value="' + hospitalItem.name + '">' + hospitalItem.name + '</option>';
-            })
-            document.getElementById("selectHospitalPatient").innerHTML = optionsHospital;
-
-            // Llenado de valores para el select "selectLaborPatient"
-            let optionsLabor = '<option value="-1">Sin Personal</option>';
-            laborList.forEach(function (laborItem) {
-                optionsLabor += '<option value="' + laborItem.name + '">' + laborItem.name + '</option>';
-            })
-            document.getElementById("selectLaborPatient").innerHTML = optionsLabor;
-
-            showPatientData();
-        } else if (valueSelectMain === 0) {
-            showHospitalData();
-        } else if (valueSelectMain === 1) {
-            showLaborData();
-        }
-
-    } else {
-        resetDesing();
-    }
-
-}
-
-function actionInsertMain() {
+function pushInsertData() {
     document.getElementById("hospitalTitle").innerHTML = "Insertar Hospital";
     document.getElementById("laborTitle").innerHTML = "Insertar Personal";
     document.getElementById("patientTitle").innerHTML = "Insertar Paciente";
@@ -167,70 +183,12 @@ function actionInsertMain() {
     document.getElementById("modifyPatient").style.display = 'none';
 }
 
+function removeDataForm(design) {
+    document.getElementById("formMain").reset();
 
-
-function showHospitalData() {
-    // Crea una tabla
-    let code = '<h1>Lista Hospitales</h1><table class="table"><thead>' +
-        '<th scope="col">Nombre</th>' +
-        '<th scope="col">Localidad</th>' +
-        '<th scope="col">Responsable</th></thead><tbody>';
-
-    hospitalList.forEach(function (hospitalItem) {
-        code += '<tr><th scope="row">' +
-            hospitalItem.name + '</th><td>' +
-            hospitalItem.location + '</td><td>' +
-            hospitalItem.attendant + '</td></tr>';
-    })
-
-    code += '</tbody></table>';
-
-    // Inserta el codigo en el DOM
-    for (let i = 0; i < hospitalList.length; i++) {
-        document.getElementById("outputHospital").innerHTML = code;
-    }
+    if (design)
+        resetDesing();
 }
 
-function showLaborData() {
-    // Crea una tabla
-    let code = '<h1>Lista Personal</h1><table class="table"><thead>' +
-        '<th scope="col">Nombre</th>' +
-        '<th scope="col">Especialidad</th></thead><tbody>';
-
-    laborList.forEach(function (laborItem) {
-        code += '<tr><th scope="row">' +
-            laborItem.name + '</th><td>' +
-            laborItem.specialty + '</td></tr>';
-    })
-
-    code += '</tbody></table>';
-
-    // Inserta el codigo en el DOM
-    for (let i = 0; i < laborList.length; i++) {
-        document.getElementById("outputLabor").innerHTML = code;
-    }
-}
-
-function showPatientData() {
-    // Crea una tabla
-    let code = '<h1>Lista Pacientes</h1><table class="table"><thead>' +
-        '<th scope="col">Nombre</th>' +
-        '<th scope="col">Hospital</th>' +
-        '<th scope="col">Personal</th></thead><tbody>';
-
-    patientList.forEach(function (patientItem) {
-        code += '<tr><th scope="row">' +
-            patientItem.name + '</th><td>' +
-            patientItem.hospital + '</td><td>' +
-            patientItem.labor + '</td></tr>';
-    })
-
-    code += '</tbody></table>';
-
-    // Inserta el codigo en el DOM
-    for (let i = 0; i < patientList.length; i++) {
-        document.getElementById("outputPatient").innerHTML = code;
-    }
-}
 
 
