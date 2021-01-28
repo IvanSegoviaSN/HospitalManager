@@ -9,6 +9,7 @@ const patientList    = [new Patient("Jesus García", "Puerta de Hierro", "Irene 
 
 let valueSelectMain;
 
+// Inserta los nuevos valores en los arrays correspondientes
 function insertItems() {
     switch (parseInt(document.getElementById("selectMain").value)) {
         case 0:
@@ -16,10 +17,13 @@ function insertItems() {
                 document.getElementById("inputLocHospital").value,
                 document.getElementById("inputResHospital").value];
 
+            // Se guarda en un array por si en algun momento hay que comprobar los datos entrantes
             hospitalList.push(new Hospital(listHospital[0], listHospital[1], listHospital[2]));
 
+            // Muestra el bloque de informacion
             showHospitalData();
 
+            // Reinicia el formulario
             removeDataForm(false);
             document.getElementById("selectMain").value = 0;
             break;
@@ -49,21 +53,26 @@ function insertItems() {
     }
 }
 
+// Volcado de informacion al bloque de insertar, para su correspondiente modificacion
 function modifyHospitalItems() {
     let itemHospital = document.getElementById("modifyHospitalItem").value;
 
+    // Funcion para buscar el objeto deseado
     function checkItem(item) {
         return item.name === itemHospital;
     }
     itemHospital = hospitalList.find(checkItem);
 
+    // Vuelco los datos en el bloque de insertar
     document.getElementById("inputNameHospital").value = itemHospital.name;
     document.getElementById("inputLocHospital").value = itemHospital.location;
     document.getElementById("inputResHospital").value = itemHospital.attendant;
 
+    // Elimina el item antiguo
     hospitalList.splice(hospitalList.indexOf(itemHospital), 1);
 }
 
+// Volcado de informacion al bloque de insertar, para su correspondiente modificacion
 function modifyLaborItems() {
     let itemLabor = document.getElementById("modifyLaborItem").value;
 
@@ -78,6 +87,7 @@ function modifyLaborItems() {
     laborList.splice(laborList.indexOf(itemLabor), 1);
 }
 
+// Volcado de informacion al bloque de insertar, para su correspondiente modificacion
 function modifyPatientItems() {
     let itemPatient = document.getElementById("modifyPatientItem").value;
 
@@ -93,6 +103,7 @@ function modifyPatientItems() {
     patientList.splice(patientList.indexOf(itemPatient), 1);
 }
 
+// Genera una tabla con los resultados del array
 function showHospitalData() {
     // Crea una tabla
     let code = '<h1>Lista Hospitales</h1><table class="table"><thead>' +
@@ -118,6 +129,7 @@ function showHospitalData() {
     }
 }
 
+// Genera una tabla con los resultados del array
 function showLaborData() {
     // Crea una tabla
     let code = '<h1>Lista Personal</h1><table class="table"><thead>' +
@@ -140,6 +152,7 @@ function showLaborData() {
     }
 }
 
+// Genera una tabla con los resultados del array
 function showPatientData() {
     // Crea una tabla
     let code = '<h1>Lista Pacientes</h1><table class="table"><thead>' +
@@ -164,16 +177,19 @@ function showPatientData() {
     }
 }
 
+// Elimina un elemento del array en funcion del indice
 function removeHospitalItem(indexToRemove) {
     hospitalList.splice(indexToRemove, 1);
     showHospitalData();
 }
 
+// Elimina un elemento del array en funcion del indice
 function removeLaborItem(indexToRemove) {
     laborList.splice(indexToRemove, 1);
     showLaborData();
 }
 
+// Elimina un elemento del array en funcion del indice
 function removePatientItem(indexToRemove) {
     patientList.splice(indexToRemove, 1);
     showPatientData();

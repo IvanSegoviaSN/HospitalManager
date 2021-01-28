@@ -62,11 +62,15 @@ function showDivs(id, display) {
 function disableButtons(disable) {
     document.getElementById("btnInsertSec").disabled = disable;
     document.getElementById("btnModifySec").disabled = disable;
+    document.getElementById("btnSaveMain").disabled = disable;
+    document.getElementById("btnClearMain").disabled = disable;
 }
 
+// Muestra de resultados y llenado de valores para los pacientes
 function pushConsultData(event) {
     event.preventDefault();
 
+    // Guardo el indice principal para reutilizarlo
     valueSelectMain = parseInt(document.getElementById("selectMain").value);
 
     if (valueSelectMain !== -1) {
@@ -105,6 +109,7 @@ function pushConsultData(event) {
     }
 }
 
+// Activa y muestra el panel de modificacion
 function pushModifyData() {
     switch (valueSelectMain) {
         case 0:
@@ -174,6 +179,7 @@ function pushModifyData() {
     }
 }
 
+// Muestra el panel de insertar
 function pushInsertData() {
     document.getElementById("hospitalTitle").innerHTML = "Insertar Hospital";
     document.getElementById("laborTitle").innerHTML = "Insertar Personal";
@@ -183,6 +189,7 @@ function pushInsertData() {
     document.getElementById("modifyPatient").style.display = 'none';
 }
 
+// Elimina todos los campos del formulario o solo los que corresponden
 function removeDataForm(design) {
     document.getElementById("formMain").reset();
 
