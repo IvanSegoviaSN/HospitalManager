@@ -48,20 +48,22 @@
 
                             <div class="row m-t-30">
                                 <div class="col-md-4">
-                                    <button type="button" id="btnInsertSec" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Insertar</button>
+                                    <button type="button" id="btnInsertSec" onclick="actionInsertMain();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Insertar</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" id="btnModifySec" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Modificar</button>
+                                    <button type="button" id="btnModifySec" onclick="actionModifyMain();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Modificar</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" id="btnRemoveSec" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Eliminar</button>
+                                    <button type="button" id="btnRemoveSec" onclick="removeItem();" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Eliminar</button>
                                 </div>
                             </div>
 
                             <hr/>
 
                             <div id="divHospitalInsertMain">
-                                <h1>Insertar Hospital</h1>
+                                <h1 id="hospitalTitle">Insertar Hospital</h1>
+
+                                <div id="modifyHospital"></div>
 
                                 <div class="input-group">
                                     <input type="text" id="inputNameHospital" class="form-control" placeholder="Nombre del hospital" required>
@@ -89,7 +91,9 @@
 
 
                             <div id="divLaborInsertMain">
-                                <h1>Insertar Personal</h1>
+                                <h1 id="laborTitle">Insertar Personal</h1>
+
+                                <div id="modifyLabor"></div>
 
                                 <div class="row m-t-25 text-left">
                                     <div class="col-sm-6 col-xs-12">
@@ -108,7 +112,9 @@
                             </div>
 
                             <div id="divPatientInsertMain">
-                                <h1>Insertar Paciente</h1>
+                                <h1 id="patientTitle">Insertar Paciente</h1>
+
+                                <div id="modifyPatient"></div>
 
                                 <div class="input-group">
                                     <input type="text" id="inputNamePatient" class="form-control" placeholder="Nombre del paciente" required>

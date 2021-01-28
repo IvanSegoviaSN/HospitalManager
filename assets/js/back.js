@@ -1,6 +1,8 @@
-const hospitalList = [];
-const laborList = [];
-const patientList = [];
+const hospitalList = [new Hospital("Puerta de Hierro", "Majadahonda", "Luis Aragonés")];
+const laborList = [new Labor("Irene Sanchez", "Médico")];
+const patientList = [new Patient("Jesus García", "Puerta de Hierro", "Irene Sanchez")];
+
+let valueSelectMain;
 
 // Lanza la carga de datos en el formulario
 function launchData() {
@@ -23,41 +25,6 @@ function launchData() {
         '<option value="Enfermera">' + "Enfermera" + '</option>' +
         '<option value="Celador">' + "Celador" + '</option>';
     document.getElementById("selectSpecialtyLabor").innerHTML = optionsSpecialty;
-
-}
-
-function actionConsultMain(event) {
-    event.preventDefault();
-
-    let valueSelectMain = parseInt(document.getElementById("selectMain").value);
-
-    // Desactiva los botones
-    valueSelectMain == -1 ? resetDesing() :
-        disableButtons(false);
-
-    // Activa el contenedor elegido
-    if (valueSelectMain != -1) {
-        showDivs(valueSelectMain, 'block');
-
-        if (valueSelectMain === 2) {
-            // Llenado de valores para el select "selectHospitalPatient"
-            let optionsHospital = '<option value="-1">Sin hospital</option>';
-            hospitalList.forEach(function (hospitalItem) {
-                optionsHospital += '<option value="' + hospitalItem.name + '">' + hospitalItem.name + '</option>';
-            })
-            document.getElementById("selectHospitalPatient").innerHTML = optionsHospital;
-
-            // Llenado de valores para el select "selectLaborPatient"
-            let optionsLabor = '<option value="-1">Sin Personal</option>';
-            laborList.forEach(function (laborItem) {
-                optionsLabor += '<option value="' + laborItem.name + '">' + laborItem.name + '</option>';
-            })
-            document.getElementById("selectLaborPatient").innerHTML = optionsLabor;
-        }
-
-    } else {
-        resetDesing();
-    }
 
 }
 
@@ -99,4 +66,54 @@ function saveData() {
             document.getElementById("selectMain").value = 2;
             break;
     }
+}
+
+function modifyHospitalItems() {
+    let itemHospital = document.getElementById("modifyHospitalItem").value;
+
+    function checkItem(item) {
+        return item.name === itemHospital;
+    }
+    itemHospital = hospitalList.find(checkItem);
+
+    document.getElementById("inputNameHospital").value = itemHospital.name;
+    document.getElementById("inputLocHospital").value = itemHospital.location;
+    document.getElementById("inputResHospital").value = itemHospital.attendant;
+
+    hospitalList.splice(hospitalList.indexOf(itemHospital), 1);
+}
+
+function modifyLaborItems() {
+    let itemLabor = document.getElementById("modifyLaborItem").value;
+
+    function checkItem(item) {
+        return item.name === itemLabor;
+    }
+    itemLabor = laborList.find(checkItem);
+
+    document.getElementById("inputNameLabor").value = itemLabor.name;
+    document.getElementById("selectSpecialtyLabor").value = itemLabor.specialty;
+
+    laborList.splice(laborList.indexOf(itemLabor), 1);
+}
+
+function modifyPatientItems() {
+    let itemPatient = document.getElementById("modifyPatientItem").value;
+    let itemSwapPatient;
+
+    for (let i = 0; i < patientList.length; i++) {
+        if (patientList[0] === itemPatient) {
+            itemSwapPatient = patientList[0];
+        }
+    }
+
+    document.getElementById("inputNamePatient").value = itemSwapPatient.name;
+    document.getElementById("selectHospitalPatient").value = itemSwapPatient.hospital;
+    document.getElementById("selectLaborPatient").value = itemSwapPatient.labor;
+
+}
+
+
+function removeItem() {
+    
 }
