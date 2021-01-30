@@ -1,11 +1,11 @@
 const hospitalList = [new Hospital("Puerta de Hierro", "Majadahonda", "Luis"),
                                      new Hospital("Santa Teresa", "Ávila", "Pedro")];
 
-const laborList        = [new Labor("Irene Sanchez", "Médico"),
-                                      new Labor("Sonia Carmona", "Celador")];
+const laborList        = [new Labor("Irene Guirre", "Médico"),
+                                      new Labor("Esperanza Diaz", "Celador")];
 
-const patientList    = [new Patient("Jesus García", "Puerta de Hierro", "Irene Sanchez"),
-                                      new Patient("Angel Nieto", "Santa Teresa", "Sonia Carmona")];
+const patientList    = [new Patient("Jesus García", "Puerta de Hierro", "Irene Guirre"),
+                                      new Patient("Angel Nieto", "Santa Teresa", "Esperanza Diaz")];
 
 let valueSelectMain;
 
